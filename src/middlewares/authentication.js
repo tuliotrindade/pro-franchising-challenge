@@ -7,10 +7,13 @@ module.exports = async (req, res, next) => {
     return res.status(401).json({ error: 'Token not found' });
   }
   try {
-    const { _id, email } = jwt.verify(token, 'temumsegredoaqui');
+    const { _id, email, role } = jwt.verify(token, 'temumsegredoaqui');
     const user = await findByEmail(email);
     if (!user) {
       return res.status(401).json({ message: 'jwt malformed' });
+    }
+    if (role !== 'admin') {
+      return res.status(401).json({ message: 'admin role is required' })
     }
     req.id = _id ;
     next();

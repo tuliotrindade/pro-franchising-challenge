@@ -4,7 +4,8 @@
   "description": "stock manager",
   "main": "index.js",
   "scripts": {
-    "dev":"nodemon ./src/api/app.js"
+    "dev": "nodemon ./src/api/app.js",
+    "seed": "node ./src/dataImport.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
     "express-rescue": "^1.1.31",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
+    "mongo-seeding": "^3.7.1",
     "mongodb": "^4.4.0"
   },
   "devDependencies": {

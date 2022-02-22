@@ -2,7 +2,8 @@ const usersService = require('../services/usersServices');
 
 const create = async (req, res) => {
   const { name, email, password } = req.body;
-  const output = await usersService.create({ name, email, password });
+  const role = 'user';
+  const output = await usersService.create({ name, email, password, role });
   if(output.message) {
     return res.status(output.code).json({ messade:output.message });
   }
@@ -17,7 +18,14 @@ const login = async (req, res) => {
   return res.status(200).json(output);
 };
 
+const changeRole = async (req, res) => {
+  const { role, email } = req.body;
+  const output = await usersService.attRole(email, role);
+  return res.status(output.code).json({ message: output.message });
+}
+
 module.exports = {
   create,
   login,
+  changeRole,
 };
