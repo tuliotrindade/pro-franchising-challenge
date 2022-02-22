@@ -1,15 +1,33 @@
+const jwt = require("jsonwebtoken");
 const { createUser, findByEmail } = require('../models/usersModel');
 
 const create = async (data) => {
-	console.log(1)
+  const user = await findByEmail(data.email)
+  if (user) {
+    return { message: "email already exists", code: 409 };
+  }
   const createdUser = await createUser(data);
-  console.log(createUser)
   return createdUser;
 };
 
-const login = async (email) => {
+const login = async (email, password) => {
   const user = await findByEmail(email);
-  return user;
+
+  if(user === null ||  user.password !== password) {
+    return { message: "wrong email or password", code: 400 };
+  }  
+
+  const { name, _id } = user;
+
+  const data = {
+    name,
+    _id,
+    password,
+    email,
+  };
+
+  const token = jwt.sign(data, 'temumsegredoaqui');
+  return token;
 };
 
 module.exports = {

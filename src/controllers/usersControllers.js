@@ -2,15 +2,19 @@ const usersService = require('../services/usersServices');
 
 const create = async (req, res) => {
   const { name, email, password } = req.body;
-  const createdUser = await usersService.create({ name, email, password });
-  return res.status(201).json(createdUser);
+  const output = await usersService.create({ name, email, password });
+  if(output.message) {
+    return res.status(output.code).json({ messade:output.message });
+  }
+  return res.status(201).json(output);
 };
 const login = async (req, res) => {
   const { email, password } = req.body;
-  const { _id, role } = await usersService.login(email);
-  const data = { email, password, _id, role };
-  const token = jwt.sign(data, 'temumsegredoaqui');
-  res.status(200).send({ token });
+  const output = await usersService.login(email, password);
+  if(output.message) {
+    return res.status(output.code).json({ message: output.message });
+  }
+  return res.status(200).json(output);
 };
 
 module.exports = {
