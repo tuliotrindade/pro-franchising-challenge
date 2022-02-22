@@ -13,4 +13,3 @@ module.exports = Joi.object({
   quantity: Joi.number().required(),
   ingredients: Joi.array().items(ingredientsSchema).required(),
 });
-
