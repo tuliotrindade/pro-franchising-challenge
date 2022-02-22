@@ -1,4 +1,4 @@
-const { registerProduct } = require('../models/productsModel');
+const { registerProduct, allProducts } = require('../models/productsModel');
 
 const createProduct = async ({
   name,
@@ -18,6 +18,13 @@ const createProduct = async ({
   return createdProduct;
 };
 
+const getAll = async () => {
+  const products = await allProducts();
+
+  return products;
+};
+
 module.exports = {
   createProduct,
+  getAll,
 }

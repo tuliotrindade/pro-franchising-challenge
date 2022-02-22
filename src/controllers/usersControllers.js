@@ -22,7 +22,7 @@ const changeRole = async (req, res) => {
   const { role, email } = req.body;
   const output = await usersService.attRole(email, role);
   return res.status(output.code).json({ message: output.message });
-}
+};
 
 module.exports = {
   create,

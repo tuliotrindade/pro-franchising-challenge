@@ -7,17 +7,14 @@ const registerProduct = async ({
   ingredients,
   createdBy,
 }) => {
-  const db = await connection();
-
-  const { insertedId } = await db
-    .collection("products")
-    .insertOne({
+  const { insertedId } = await connection()
+    .then((db) => db.collection('products').insertOne({
       name,
       price,
       quantity,
       createdBy,
       ingredients,
-    });
+    }));
   
   const createdRecipe = {
     _id: insertedId,
@@ -31,6 +28,13 @@ const registerProduct = async ({
   return createdRecipe;
 };
 
+const allProducts = async () => {
+  const products = await connection()
+    .then((db) => db.collection('products').find({}).toArray());
+  return products;
+}
+
 module.exports = {
 	registerProduct,
+  allProducts,
 }
