@@ -33,7 +33,7 @@ const updateRole = async (email, role) => {
       }
     )
   );
-  return updateRole;
+  return updatedRole;
 }
 
 module.exports = {

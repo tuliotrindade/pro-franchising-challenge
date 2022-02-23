@@ -46,9 +46,49 @@ const deleteProduct = async (id) => {
     .then((db) => db.collection('products').deleteOne({ _id: ObjectId(id) }));
 };
 
+const edit = async (id, data) => {
+  let { name, price, quantity, ingredients } = data;
+  const {
+    name: oldName,
+    price: oldPrice,
+    quantity: oldQuantity,
+    ingredients: oldIngredients,
+    createdBy,
+  } = findProduct(id);
+
+  if (name === undefined || null) {
+    name = oldName;
+  };
+  if (price === undefined || null) {
+    price = oldPrice
+  };
+  if (quantity === undefined || null) {
+    quantity = oldQuantity;
+  };
+  if (ingredients === undefined || null) {
+    ingredients = oldIngredients;
+  };
+  const updatedProduct = await connection()
+    .then((db) => db.collection('products').updateOne(
+    { _id: ObjectId(id) },
+    {
+      $set: {
+        name: name,
+        price: price,
+        quantity: Number(quantity),
+        ingredients,
+        createdBy: createdBy
+      },
+    }
+  ));
+  
+  return updatedProduct;
+}
+
 module.exports = {
 	registerProduct,
   allProducts,
   deleteProduct,
   findProduct,
-}
+  edit,
+};

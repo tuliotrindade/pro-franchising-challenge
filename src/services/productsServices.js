@@ -1,4 +1,4 @@
-const { registerProduct, allProducts, deleteProduct, findProduct } = require('../models/productsModel');
+const { registerProduct, allProducts, deleteProduct, edit, findProduct } = require('../models/productsModel');
 
 const createProduct = async ({
   name,
@@ -27,14 +27,27 @@ const getAll = async () => {
 const removeProduct = async (id) => {
   const product = await findProduct(id);
   if(!product) {
-    return { code: 404, message:'product not found' }
+    return { code: 404, message:'product not found' };
   }
   await deleteProduct(id);
-  return { code: 200, message:'product deleted' }
-}
+  return { code: 200, message:'product deleted' };
+};
+
+const update = async (id, data) => {
+  const product = await findProduct(id);
+  if(!product) {
+    return { code: 404, message:'product not found' };
+  };
+  const updatedProduct = await edit(id, data);
+  if(!updatedProduct) {
+    return { code: 404, message:'algo deu errado' };
+  }
+  return { code: 200, message: 'product has been updated' };
+};
 
 module.exports = {
   createProduct,
   getAll,
   removeProduct,
+  update,
 }
