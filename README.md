@@ -66,11 +66,11 @@ A autenticação deve ser feita por meio da chave authorization no Header da req
 <img src="/src/images/getAllRequisition.png" alt="todos produtos"/>
 <img src="/src/images/getAllResponse.png" alt="todos produtos"/>
 
-### Atualizando um imóvel
+### Atualizando um Produto
 
 <img src="/src/images/update.png" alt="atualização"/>
 
-### Deletando um imóvel
+### Deletando um Produto
 
 <img src="/src/images/deleteProduct.png" alt="deletar"/>
 
